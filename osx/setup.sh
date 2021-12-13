@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Xcode - install from appstore first
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -runFirstLaunch
+sudo xcodebuild -license
+
 # Brew
 ## Install brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -91,3 +96,21 @@ export BAZEL_VERSION=3.2.0
 curl -fLO "https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
 chmod +x "bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
 ./bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh --user
+
+## Flutter (run this only after installing Andriod Studio)
+brew install --cask android-studio
+brew install --cask android-SDK
+brew install --cask android-ndk
+brew install --cask flutter
+# Manually install glue before the next line :
+## https://www.google.com/search?q=no+package+%27libimobiledevice-glue-1.0%27+found&oq=No+package+%27libimobiledevice-glue-1.0%27+found&aqs=chrome.0.0i512l3.219j0j1&sourceid=chrome&ie=UTF-8
+# This reguires glue, if you don't want to manually install it, skip
+## brew install --HEAD libimobiledevice
+brew install ideviceinstaller ios-deploy cocoapods
+pod setup
+sdkmanager --install "cmdline-tools;latest"
+## Install SDK command line tools through Android Studio like : https://stackoverflow.com/questions/68236007/i-am-getting-this-errors-cmdline-tools-component-is-missing-after-installing-f
+flutter doctor --android-licenses
+flutter doctor # Check that all is green
+### Verify iOS simulator working : open -a Simulator
+
